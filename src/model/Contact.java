@@ -80,5 +80,16 @@ public class Contact {
         this.email = email;
     }
 
-
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "phoneNumber='" + phoneNumber + '\'' +
+                ", contactGroup='" + contactGroup + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", gender='" + gender + '\'' +
+                ", address='" + address + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
