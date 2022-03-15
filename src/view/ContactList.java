@@ -2,7 +2,9 @@ package view;
 
 import controller.ContactManager;
 import model.Contact;
+import storage.ContactFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class ContactList {
     public static LinkedList<Contact> contacts = ContactManager.contactList;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int choice = -1;
         Scanner input = new Scanner(System.in);
         while (choice != 0) {
@@ -29,25 +31,26 @@ public class ContactList {
 
             switch (choice) {
                 case 1:
-
+                    showAllContact();
                     break;
                 case 2:
-
+                    Contact newContact = creatNewContact();
+                    ContactManager.addNewContact(newContact);
                     break;
                 case 3:
-
+                    editContactByPhoneNumber();
                     break;
                 case 4:
-
+                    deleteContactByPhoneNumber();
                     break;
                 case 5:
-
+                    searchContact();
                     break;
                 case 6:
-
+                    ContactFile.readFile();
                     break;
                 case 7:
-
+                    ContactFile.writeFile(contacts);
                     break;
                 case 0:
                     System.exit(0);
@@ -124,6 +127,31 @@ public class ContactList {
     }
 
     public static void searchContact() {
-
+        Scanner input = new Scanner(System.in);
+        int choice = -1;
+        System.out.println("1. Tìm liên hệ theo tên");
+        System.out.println("2. Tìm liên hệ theo sđt");
+        System.out.println("Nhập lựa chọn: ");
+        choice = input.nextInt();
+        if (choice == 1) {
+            System.out.println("Nhập số họ tên: ");
+            String searchingName = input.nextLine();
+            int searchingIndex = ContactManager.findContactIndexByFullname(searchingName);
+            if (searchingIndex != -1) {
+                Contact foundContact = contacts.get(searchingIndex);
+                System.out.println(foundContact);
+            }
+            else System.out.println("Không tìm được danh bạ với số điện thoại trên");
+        }
+        if (choice == 2) {
+            System.out.println("Nhập số điện thoại: ");
+            String searchingNumber = input.nextLine();
+            int searchingIndex = ContactManager.findContactIndexByPhoneNumber(searchingNumber);
+            if (searchingIndex != -1) {
+                Contact foundContact = contacts.get(searchingIndex);
+                System.out.println(foundContact);
+            }
+            else System.out.println("Không tìm được danh bạ với số điện thoại trên");
+        }
     }
 }
